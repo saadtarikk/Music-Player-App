@@ -3,48 +3,28 @@ import React, {useEffect, useState, useRef} from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-export default function LandingPage() {
+export default function LandingPage({item}) {
 
-    const [top20, setTop20] = useState(null);
-
-    const getTop20 = function() {
-        fetch('https://itunes.apple.com/gb/rss/topsongs/limit=20/json')
-        .then(res => res.json())
-        .then(data => setTop20(data.feed.entry))
-        .catch(err => {
-            console.log(err)
-        })
-    }
-
-    useEffect(() => {
-        setTop20(getTop20);
-    },[])
     
 
   return (
-     
-    <TouchableOpacity style={styles.listItem}>
-        <StatusBar style="auto" />
-        <View style={styles.listItemView}>
-        { top20 ?  <Text style={styles.listItemText}>{top20[0].title.label}</Text> : null}
-        {/* {top20 ? <Text></Text>} */}
-        <Ionicons
-        name='play-circle' 
-        size={35}
-        color='#f54254' />
-        </View>
-    </TouchableOpacity>
+    <View style={styles.container}>
+    <StatusBar style={styles.StatusBar}/>
+    <Header title="Music"/>
+    <FlatList data={top20}  renderItem={({item, index}) => <TopChart key={index} item={item}/>} />
+  </View>
+    
   );
 }
 
 const styles = StyleSheet.create({
     listItem: {
-        padding: 20,
+        padding: 28,
         backgroundColor: 'black',
         borderBottomWidth: 1,
         borderColor: '#eee'
     },  
-  listItemView: {
+  songView: {
     flexDirection: 'row',
     backgroundColor: 'black',
     alignItems: 'center',
@@ -53,5 +33,12 @@ const styles = StyleSheet.create({
   listItemText: {
       color: 'white',
       fontSize: 15
+  },
+  playBtn: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'baseline',
+      backgroundColor: 'black',
+      position: 'relative'
   }
 });
