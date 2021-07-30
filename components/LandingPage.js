@@ -4,27 +4,22 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function LandingPage() {
-    
-    const[top20, setTop20] = useState(null);
 
+    const [top20, setTop20] = useState(null);
 
-    const getTop20 = () => {
-        fetch('https:itunes.apple.com/gb/rss/topsongs/limit=20/json')
+    const getTop20 = function() {
+        fetch('https://itunes.apple.com/gb/rss/topsongs/limit=20/json')
         .then(res => res.json())
         .then(data => setTop20(data.feed.entry))
-        .catch((err) => {
+        .catch(err => {
             console.log(err)
         })
     }
 
     useEffect(() => {
-        getTop20()
+        setTop20(getTop20);
     },[])
-
-
-
-
-
+    
 
   return (
      

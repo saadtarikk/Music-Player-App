@@ -3,7 +3,12 @@ import React from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import Header from './components/Header';
 import LandingPage from './components/LandingPage'
+import { Ionicons } from '@expo/vector-icons';
 export default function App() {
+
+  
+
+
   return (
     <View style={styles.container}>
       <StatusBar style={styles.StatusBar}/>
