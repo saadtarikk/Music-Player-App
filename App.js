@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useEffect, useState, useRef} from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, Text, View, SearchBar} from 'react-native';
 import Header from './components/Header';
 import LandingPage from './components/LandingPage'
 import TopChart from './components/TopChart'
@@ -44,8 +44,12 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <StatusBar style={styles.StatusBar}/>
+      <View>
+      <StatusBar style='light' /></View>
       <Header title="Music"/>
+      <View>
+      
+      </View>
       <FlatList data={top20}  renderItem={({item, index}) => <TopChart item={item}/>} />
       
     </View>
@@ -55,7 +59,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
   flex: 1,
-  backgroundColor: 'black',
+  backgroundColor: '#2f363c',
   paddingTop: 50,
   },
   text: {
@@ -64,6 +68,6 @@ const styles = StyleSheet.create({
   },
   StatusBar:{
     backgroundColor: '#f54254',
-    color: 'black'
+    color: 'white'
   }
 });
