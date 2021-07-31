@@ -20,7 +20,7 @@ export default function TopChart({item, top20}) {
          {/* <Image source={{uri: 'https://is3-ssl.mzstatic.com/image/thumb/Music114/v4/23/81/27/238127f9-bec3-639a-6f8a-efce1192850e/20UM1IM07632.rgb.jpg/170x170bb.png'}}
           style={styles.artworkImg}
            /> */}
-           <Image source={item["im:image"][2].label}
+           <Image source={item["im:image"][2].label} 
           style={styles.artworkImg}
           />
       </View>
@@ -105,7 +105,7 @@ export default function TopChart({item, top20}) {
               </View>
             </SafeAreaView>
           </Modal>
-            {/* <Image style={{height:40, width:40,  backgroundColor:'white'}} source={{uri: {item["im:image"].label}}}/> */}
+            {/* <Image style={{height:40, width:40,  backgroundColor:'black'}} source={item["im:image"][2].label}/> */}
             { item ?  <Text  style={styles.listItemText}>{item["im:name"].label}{'\n'}{item["im:artist"].label}</Text> : null}
             <Ionicons
             name='play-circle' 

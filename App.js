@@ -9,7 +9,7 @@ import {v4 as uuid} from 'uuid';
 import { set } from 'lodash';
 export default function App() {
 
-  const [top20, setTop20] = useState(null);
+  const [top20, setTop20] = useState([]);
   const getTop20 = function() {
         fetch('https://itunes.apple.com/gb/rss/topsongs/limit=20/json')
         .then(res => res.json())
@@ -47,15 +47,18 @@ export default function App() {
       <View>
       <StatusBar style='light' /></View>
       <Header title="Music"/>
-      <View>
+    
       
-      </View>
+      
+
+      
       <FlatList data={top20} 
        renderItem={({item, index}) => <TopChart top20={top20} item={item}/>}
        keyExtractor={(item) => item.index}
         />
+        
       
-    </View>
+    </View> 
   );
 }
 
