@@ -50,7 +50,10 @@ export default function App() {
       <View>
       
       </View>
-      <FlatList data={top20}  renderItem={({item, index}) => <TopChart item={item}/>} />
+      <FlatList data={top20} 
+       renderItem={({item, index}) => <TopChart top20={top20} item={item}/>}
+       keyExtractor={(item) => item.index}
+        />
       
     </View>
   );
