@@ -8,16 +8,15 @@ import FooterControl from './FooterControl';
 import MusicControls from './MusicControls';
 import ProgressLabel from './ProgressLabel';
 import SongSlider from './SongSlider';
+import { Audio } from 'expo-av';
 
-export default function TopChart({item, top20}) {
+export default function TopChart({item, top20, index}) {
 
   const [musicPlayer, setMusicPlayer] = useState(false);
   const {width, height} = Dimensions.get('window')
   const songSlider = useRef(null)
-
-  // const skipForward = () => {
-  //   item["im:name"].label + 1
-  // }
+  const [selectedSong, setSelectedSong] = useState()
+  
 
   const renderSongs = ({item}) => {
     return(
@@ -27,12 +26,12 @@ export default function TopChart({item, top20}) {
        alignItems: 'center'
      }}>
       <View style={styles.artworkWrapper}>
-          <Image source={{uri: 'https://is3-ssl.mzstatic.com/image/thumb/Music114/v4/23/81/27/238127f9-bec3-639a-6f8a-efce1192850e/20UM1IM07632.rgb.jpg/170x170bb.png'}}
+          {/* <Image source={{uri: 'https://is3-ssl.mzstatic.com/image/thumb/Music114/v4/23/81/27/238127f9-bec3-639a-6f8a-efce1192850e/20UM1IM07632.rgb.jpg/170x170bb.png'}}
           style={styles.artworkImg}
-           /> 
-         {/* <Image source={require(item["im:image"][2].label)} 
+           />  */}
+         <Image source={{uri: item["im:image"][2].label}} 
           style={styles.artworkImg}
-          />  */}
+          /> 
       </View>
      </View>
     )
@@ -72,13 +71,17 @@ export default function TopChart({item, top20}) {
             </SafeAreaView>
           </Modal>
             {/* <Image style={{height:40, width:40,  backgroundColor:'black'}} source={item["im:image"][2].label}/> */}
-            { item ?  <Text  style={styles.listItemText}>{item["im:name"].label}{'\n'}{item["im:artist"].label}</Text> : null}
+            <View style={styles.playlistItemWrapper}>
+            { item ?  <Text  style={styles.listItemSong}>{index + 1}. {item["im:name"].label}</Text> : null}
+            { item ?  <Text  style={styles.listItemArtist}>{item["im:artist"].label}</Text> : null}
+            </View>
             <Ionicons
             name='play-circle' 
             size={35}
             color='#f54254'
             onPress={() => setMusicPlayer(true)}
             />
+            
         </View>
     </TouchableOpacity>
   );
@@ -98,10 +101,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  listItemText: {
+  listItemSong: {
+    
       color: 'white',
-      fontSize: 15
+      fontSize: 17,
+      fontWeight: 'bold'
   },
+  listItemArtist: {
+      color: 'grey',
+      fontSize: 14
+  },  
   playBtn: {
       flexDirection: 'row',
       justifyContent: 'center',

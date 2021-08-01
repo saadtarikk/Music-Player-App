@@ -7,6 +7,7 @@ import TopChart from './components/TopChart'
 import { Ionicons } from '@expo/vector-icons';
 import {v4 as uuid} from 'uuid';
 import { set } from 'lodash';
+import { Audio } from 'expo-av';
 export default function App({width}) {
 
   const [top20, setTop20] = useState([]);
@@ -50,20 +51,10 @@ export default function App({width}) {
       <StatusBar style='light' backgroundColor='#f54254' /></View>
       <Header title="Music"/>
       <FlatList data={top20} 
-       renderItem={({item}) => <TopChart top20={top20} item={item}/>}
+       renderItem={({item, index}) => <TopChart top20={top20} item={item} index={index}/>}
        keyExtractor={(item, index) => String(index)}
-        /> 
-    
-      
-      
-
-      
-      {/* <FlatList data={top20} 
-       renderItem={({item}) => <TopChart top20={top20} item={item}/>}
-       keyExtractor={(item, index) => String(index)}
-        /> */}
+        />
         
-      
     </View> 
   );
 }
