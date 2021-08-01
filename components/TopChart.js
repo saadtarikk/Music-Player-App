@@ -1,15 +1,25 @@
 import { StatusBar} from 'expo-status-bar';
 import React, {useEffect, useState, useRef} from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Image, Modal, Dimensions, FlatList} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity,
+   SafeAreaView, Image, Modal, Dimensions,
+    FlatList, Button} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import Slider from '@react-native-community/slider';
+import FooterControl from './FooterControl';
+import MusicControls from './MusicControls';
+import ProgressLabel from './ProgressLabel';
+import SongSlider from './SongSlider';
 
 export default function TopChart({item, top20}) {
 
   const [musicPlayer, setMusicPlayer] = useState(false);
   const {width, height} = Dimensions.get('window')
+  const songSlider = useRef(null)
 
-  const renderSongs = () => {
+  // const skipForward = () => {
+  //   item["im:name"].label + 1
+  // }
+
+  const renderSongs = ({item}) => {
     return(
      <View style={{
        width: width,
@@ -17,23 +27,20 @@ export default function TopChart({item, top20}) {
        alignItems: 'center'
      }}>
       <View style={styles.artworkWrapper}>
-         {/* <Image source={{uri: 'https://is3-ssl.mzstatic.com/image/thumb/Music114/v4/23/81/27/238127f9-bec3-639a-6f8a-efce1192850e/20UM1IM07632.rgb.jpg/170x170bb.png'}}
+          <Image source={{uri: 'https://is3-ssl.mzstatic.com/image/thumb/Music114/v4/23/81/27/238127f9-bec3-639a-6f8a-efce1192850e/20UM1IM07632.rgb.jpg/170x170bb.png'}}
           style={styles.artworkImg}
-           /> */}
-           <Image source={item["im:image"][2].label} 
+           /> 
+         {/* <Image source={require(item["im:image"][2].label)} 
           style={styles.artworkImg}
-          />
+          />  */}
       </View>
-
      </View>
     )
   }
+  // console.log(renderSongs)
 
 
   return (
-
-    
-     
     <TouchableOpacity style={styles.listItem}>
         {/* <StatusBar style="auto"/> */}
         <View style={styles.songView}>
@@ -42,9 +49,10 @@ export default function TopChart({item, top20}) {
               <View style={styles.musicPlayer}>
                     
                     <FlatList
+                    ref={songSlider}
                       data={top20}
                       renderItem={renderSongs}
-                      keyExtractor={(item) => item.id}
+                      keyExtractor={(item, index) => String(index)}
                       horizontal
                       pagingEnabled
                       showsHorizontalScrollIndicator={false}
@@ -56,53 +64,11 @@ export default function TopChart({item, top20}) {
                       <Text style={styles.artist}>{item["im:artist"].label}</Text>
                     </View>
 
-                    <View>
-                      <Slider
-                        style={styles.progressContainer}
-                        value={10}
-                        minimumValue={0}
-                        maximumValue={100}
-                        thumbTintColor='#f54254'
-                        minimumTrackTintColor='#f54254'
-                        maximumTrackTintColor='#FFF'
-                        onSlidingComplete={() => {}}
-                      />
-                    </View>
-
-                    <View style={styles.ProgressLabelContainer}>
-                      <Text style={styles.ProgressLabelTxt}>0.00</Text>
-                      <Text style={styles.ProgressLabelTxt}>3.40</Text>
-                    </View>
-
-                    <View style={styles.musicControls}>
-                      <TouchableOpacity onPress={() => {}}>
-                        <Ionicons name='play-skip-back-outline' size={35} color='#f54254' style={{marginTop: 25}} />
-                      </TouchableOpacity>
-                      <TouchableOpacity onPress={() => {}}>
-                        <Ionicons name='ios-pause-circle' size={75} color='#f54254' />
-                      </TouchableOpacity>
-                      <TouchableOpacity onPress={() => {}}>
-                        <Ionicons name='play-skip-forward-outline' size={35} color='#f54254' style={{marginTop: 25}} />
-                      </TouchableOpacity>
-                    </View>
-
+                   <SongSlider />
+                    <ProgressLabel />
+                    <MusicControls />
               </View>
-              <View style={styles.footer}  >
-                <View style={styles.footerControls}>
-                  <TouchableOpacity onPress={() => {}}>
-                    <Ionicons name="heart-outline" size={25} color="#777777"/>
-                  </TouchableOpacity> 
-                  <TouchableOpacity onPress={() => {}}>
-                    <Ionicons name="repeat" size={25} color="#777777"/>
-                  </TouchableOpacity> 
-                  <TouchableOpacity onPress={() => {}}>
-                    <Ionicons name="share-outline" size={25} color="#777777"/>
-                  </TouchableOpacity> 
-                  <TouchableOpacity onPress={() => {}}>
-                    <Ionicons name='ellipsis-horizontal' size={25} color="#777777"/>
-                  </TouchableOpacity> 
-                </View>
-              </View>
+              <FooterControl setMusicPlayer={setMusicPlayer}/> 
             </SafeAreaView>
           </Modal>
             {/* <Image style={{height:40, width:40,  backgroundColor:'black'}} source={item["im:image"][2].label}/> */}
@@ -153,18 +119,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#2f363c'
   },
-  footer: {
-    borderTopColor: '#777777',
-    borderTopWidth: 1,
-    alignItems: 'center',
-    paddingVertical: 15,
-  },
-  footerControls: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '80%',
-    // margin: 50
-  },
+ 
   artworkWrapper: {
     width: 300,
     height: 340,
@@ -194,25 +149,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#EEEEEE'
   },
-  progressContainer: {
-    width: 350,
-    height: 40,
-    marginTop: 25,
-    flexDirection: 'row'
-  },
-  ProgressLabelContainer: {
-    width: 340,
-    flexDirection: 'row',
-    justifyContent: 'space-between'
-  },
-  ProgressLabelTxt: {
-    color: '#fff'
-  },
-  musicControls: {
-    flexDirection: 'row',
-    width: '60%',
-    justifyContent: 'space-between',
-    marginTop: 15
-     
-  }
+  
+  
+  
 });
