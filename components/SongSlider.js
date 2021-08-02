@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     progressContainer: {
         width: 350,
         height: 40,
-        marginTop: 25,
+        marginBottom: 25,
         flexDirection: 'row'
       },
 })

@@ -16,7 +16,27 @@ export default function TopChart({item, top20, index}) {
   const {width, height} = Dimensions.get('window')
   const songSlider = useRef(null)
   const [selectedSong, setSelectedSong] = useState()
+
+  async function playSong() {
+    console.log('loading song');
+    const {selectedSong} = await Audio.Sound.createAsync(
+      require('../assets/asd.m4a')
+    )
+    setSelectedSong(selectedSong)
+
+    console.log('Playing sound');
+    await selectedSong.playAsync(); 
+  }
+
+  React.useEffect(() => {
+    return selectedSong
+      ? () => {
+          console.log('Unloading Sound');
+          selectedSong.unloadAsync(); }
+      : undefined;
+  }, [selectedSong]);
   
+  // console.log(item.link[2].attributes.href)
 
   const renderSongs = ({item}) => {
     return(
@@ -33,6 +53,10 @@ export default function TopChart({item, top20, index}) {
           style={styles.artworkImg}
           /> 
       </View>
+      <View>
+            <Text style={styles.title}>{item["im:name"].label}</Text>
+            <Text style={styles.artist}>{item["im:artist"].label}</Text>
+          </View>
      </View>
     )
   }
@@ -57,15 +81,9 @@ export default function TopChart({item, top20, index}) {
                       showsHorizontalScrollIndicator={false}
                       scrollEventThrottle={16}
                      />
-
-                    <View>
-                      <Text style={styles.title}>{item["im:name"].label}</Text>
-                      <Text style={styles.artist}>{item["im:artist"].label}</Text>
-                    </View>
-
                    <SongSlider />
                     <ProgressLabel />
-                    <MusicControls />
+                    <MusicControls playSong={playSong}/>
               </View>
               <FooterControl setMusicPlayer={setMusicPlayer}/> 
             </SafeAreaView>
@@ -89,7 +107,7 @@ export default function TopChart({item, top20, index}) {
 
 const styles = StyleSheet.create({
     listItem: {
-        padding: 40,
+        padding: 30,
         backgroundColor: '#2f363c',
         borderBottomWidth: 1,
         borderColor: '#eee',
@@ -133,7 +151,7 @@ const styles = StyleSheet.create({
     width: 300,
     height: 340,
     marginBottom: 25,
-    shadowColor: '#f54254',
+    shadowColor: 'white',
     shadowOffset: {
       width: 5,
       height: 5.
@@ -143,11 +161,11 @@ const styles = StyleSheet.create({
   },
   artworkImg: {
     width: '100%',
-    height: '100%',
+    height: '90%',
     borderRadius: 15,
   },
   title: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: '600',
     textAlign: 'center',
     color: '#EEEEEE'

@@ -18,10 +18,12 @@ const styles = StyleSheet.create({
       ProgressLabelContainer: {
         width: 340,
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        // marginBottom: 10
       },
       ProgressLabelTxt: {
-        color: '#fff'
+        color: '#fff',
+        marginBottom: 10,
       },
 
 })

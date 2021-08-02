@@ -4,19 +4,19 @@ import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Image, Modal, D
 import { Ionicons } from '@expo/vector-icons';
 
 
-const MusicControls = () => {
+const MusicControls = ({playSong}) => {
     return (
-        <View style={styles.musicControls}>
-                      <TouchableOpacity onPress={() => {skipForward}}>
-                        <Ionicons name='play-skip-back-outline' size={35} color='#f54254' style={{marginTop: 25}} />
-                      </TouchableOpacity>
-                      <TouchableOpacity onPress={() => {}}>
-                        <Ionicons name='ios-pause-circle' size={75} color='#f54254' />
-                      </TouchableOpacity>
-                      <TouchableOpacity onPress={() => {}}>
-                        <Ionicons name='play-skip-forward-outline' size={35} color='#f54254' style={{marginTop: 25}} />
-                      </TouchableOpacity>
-                    </View>
+      <View style={styles.musicControls}>
+          <TouchableOpacity onPress={() => {}}>
+            <Ionicons name='play-skip-back-outline' size={35} color='#f54254' style={{marginTop: 25}} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => playSong()}>
+            <Ionicons name='ios-pause-circle' size={75} color='#f54254' />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => {}}>
+            <Ionicons name='play-skip-forward-outline' size={35} color='#f54254' style={{marginTop: 25}} />
+          </TouchableOpacity>
+      </View>
     )
 }
 
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         width: '60%',
         justifyContent: 'space-between',
-        marginTop: 15,
+        marginBottom: 15,
         
          
       }
