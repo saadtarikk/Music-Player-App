@@ -25,3 +25,7 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 The build is minified and the filenames include the hashes.
 Your app is ready to be deployed!
+
+
+![Simulator Screen Shot - iPhone 12 - 2021-08-04 at 10 21 59](https://user-images.githubusercontent.com/82512601/129206547-581d3cf5-d58f-43ed-aef0-451b36b1b02b.png)
+![Simulator Screen Shot - iPhone 12 - 2021-08-04 at 10 21 49](https://user-images.githubusercontent.com/82512601/129206565-e5391ebf-a0b5-40bd-96dc-d0a87d960b57.png)
